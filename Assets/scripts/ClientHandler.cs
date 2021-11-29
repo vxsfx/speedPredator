@@ -7,19 +7,25 @@ public class ClientHandler : MonoBehaviour
     //class to handle client input
 
     Camera camera;
-    ServerHandler server;
+    
+    
+    public ServerHandler server;
 
     uint clientID;
 
-    void connect() {
+    void Start() {
         camera = Camera.main;
+
     }
 
 
     //jump input
     void checkJump() {
-        if (Input.GetButton("Jump")) { 
+        if (Input.GetButton("Jump")) {
             //request jump
+            //server.networkAddress = "localhost";
+
+            //server.StartHost();
         }
     }
 
@@ -40,6 +46,11 @@ public class ClientHandler : MonoBehaviour
         if (Input.GetButton("")) {
         
         }
+    }
+
+    public void Update()
+    {
+        checkJump();
     }
 
 
