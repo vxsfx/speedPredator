@@ -18,6 +18,4 @@ public class menu : NetworkDiscovery
         //server.findServer();
         //manager.StartDiscovery();
     }
-
-
 }
