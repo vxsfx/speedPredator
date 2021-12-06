@@ -5,9 +5,10 @@ using Mirror;
 
 public class ServerHandler : NetworkManager
 {
-    
-
-
+    //server address
+    private const string serverAddress = "localhost";
+    //address to main server
+    //server stores host addresses//
 
 
     //commmands/requests
