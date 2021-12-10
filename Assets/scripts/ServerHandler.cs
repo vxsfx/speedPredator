@@ -9,32 +9,21 @@ public class ServerHandler : NetworkManager
     private const string serverAddress = "localhost";
     //address to main server
     //server stores host addresses//
-    struct host {
-        int playerCount;
-        string Address;
+    public struct host {
+        public string Address;
+        public int maxPlayers;
     }
-    public Dictionary<int, host> hostList;
+
+    //need Time to hostlist(remove from list when time up)
+    public static List<host> hostList;
+
+    public static void addHost(string Address, int maxPlayers) {
+        host h;
+        h.Address = Address;
+        h.maxPlayers = maxPlayers;
+        hostList.Add(h);
+    }
 
     
-    void addHost(string Address) {
-        //id
-
-    }
-
-    string findHost() {
-        foreach (host h in hostList) {
-            if (h.playerCount < maxPlayers) {
-                return h.Address;
-            }
-        }
-        return "none found"
-    }
-
-    void Count(int id, int count) {
-        hostList[id].playerCount = count;
-    }
-
-
-
-
+    
 }

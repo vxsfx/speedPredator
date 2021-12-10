@@ -1,21 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror.Discovery;
+using Mirror;
 
 //client ONLY
-public class menu : NetworkDiscovery
+public class menu : MonoBehaviour
 {
+    [SerializeField]
+    HostHandler host;
+
+    [SerializeField]
     ServerHandler server;
-    
+
     public void startHost() {
-        server.StartHost();
-        //POST Address to server
+
+        server.StartClient();
+        //get Address
+        string Address = "localhost";
+
+        ServerHandler.addHost(Address, 6);
+        server.StopClient();
+
+        host.StartHost();   
     }
 
     //discoveredServers;
     public void findGame() {
-        //server.findServer();
-        //manager.StartDiscovery();
+        foreach (ServerHandler.host h in ServerHandler.hostList)
+        {
+            host.networkAddress = h.Address;
+            host.StartClient();
+            if (HostHandler.PlayerCount < h.maxPlayers)
+            {
+                return;
+            }
+            host.StopClient();
+        }
     }
-}
+}   

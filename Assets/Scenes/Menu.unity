@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 291640610}
   - component: {fileID: 291640609}
-  - component: {fileID: 291640604}
   - component: {fileID: 291640606}
   - component: {fileID: 291640605}
   - component: {fileID: 291640608}
@@ -145,33 +144,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &291640604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 291640603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad52602d97ba9545b7c86de5b6ac822, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
-  PersistNetworkManagerToOfflineScene: 0
-  runInBackground: 1
-  autoStartServerBuild: 1
-  serverTickRate: 30
-  offlineScene: Assets/Scenes/Menu.unity
-  onlineScene: Assets/Scenes/Test.unity
-  transport: {fileID: 291640606}
-  networkAddress: localhost
-  maxConnections: 5
-  authenticator: {fileID: 291640605}
-  playerPrefab: {fileID: 8458604962481766274, guid: 9ea95e045f432714d819be44c2b07279, type: 3}
-  autoCreatePlayer: 1
-  playerSpawnMethod: 1
-  spawnPrefabs: []
 --- !u!114 &291640605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,7 +347,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 351674039}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1445011767}
+        m_TargetAssemblyTypeName: menu, Assembly-CSharp
+        m_MethodName: startHost
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &351674039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,7 +599,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdbf2649748878a489f374c7f8b2e48e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  server: {fileID: 291640604}
+  server: {fileID: 0}
 --- !u!4 &1111424489
 Transform:
   m_ObjectHideFlags: 0
@@ -826,14 +810,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cbf7d77f80a7214cb2438a298fb7abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secretHandshake: 3604184926915333748
-  serverBroadcastListenPort: 47777
-  enableActiveDiscovery: 1
-  ActiveDiscoveryInterval: 3
-  transport: {fileID: 0}
-  OnServerFound:
-    m_PersistentCalls:
-      m_Calls: []
+  host: {fileID: 0}
+  server: {fileID: 0}
 --- !u!1 &1677198871
 GameObject:
   m_ObjectHideFlags: 0
@@ -899,4 +877,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1853517679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1853517680}
+  m_Layer: 0
+  m_Name: ServerHost
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1853517680
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1853517679}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 478.11652, y: -98.948, z: 1035.7183}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
