@@ -4,15 +4,16 @@ using UnityEngine;
 using Mirror;
 public class HostHandler : NetworkManager
 {
-    List<GameObject> players;
+    //need initialise???>
+    static List<Player> players;
     int id;
 
-    int maxPLayers = 6;
-    public static int PlayerCount = 1;
+    uint maxPLayers = 6;
+    public static int PlayerCount = 0;
 
-    #region overloads
-    //overloaded copy from Network Manager
-    public void OnServerAddPLayer(NetworkConnection conn)
+
+    //overloaded
+    public void OnServerAddPlayer(NetworkConnection conn)
     {
         Transform startPos = GetStartPosition();
         GameObject player = startPos != null
@@ -22,35 +23,36 @@ public class HostHandler : NetworkManager
         // instantiating a "Player" prefab gives it the name "Player(clone)"
         // => appending the connectionId is WAY more useful for debugging!
         player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
-
-        NetworkServer.AddPlayerForConnection(conn, player);
-
-        //add append to list
-        players.Add(player);
-
+        players.Add(player.GetComponent<Player>());
         PlayerCount++;
+        Debug.Log(PlayerCount);
+        NetworkServer.AddPlayerForConnection(conn, player);
     }
-    public void OnServerDisconnect(NetworkConnection conn)
-    {
-        NetworkServer.DestroyPlayerForConnection(conn);
-        PlayerCount--;
-    }
-    #endregion
 
 
-
-#region commands
+    #region commands
 
     //[Command]
-    static public void moveRequest(Vector3 dir, uint id)
+    static public void moveRequest(int id, Vector3 dir)
     {
-        Debug.Log("moved");    
+        players[id].move(dir);
     }
 
     //[Command]
-    static public void jumpRequest(uint id) { }
+    static public void jumpRequest(int id) {
+        Debug.Log("jumpR");
+    }
     
     //[Command]
-    static public void crouchRequest(uint id) { }
+    static public void crouchRequest(int id) {
+        Debug.Log("crouchR");
+    }
+
+    static public void setSpeed(int id, float speed) {
+        players[id].setSpeed(speed);
+    }
+    static public void setRotation(int id, float x, float y) {
+        //players[id].setRotation(x, y);
+    }
     #endregion
 }

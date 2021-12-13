@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     private Rigidbody rb;
     #endregion
 
+    [SerializeField]
+    private Transform camerapos;
+
 
     private float speed = 1.0f;
 
@@ -47,7 +50,7 @@ public class Player : MonoBehaviour
         }
     }
     //called 3rd
-    void sprint() {
+    public void sprint() {
         if (state == PlayerState.walk)
         {
             speed = 2.0f;
@@ -55,7 +58,7 @@ public class Player : MonoBehaviour
         }
     }
     //called 4th
-    void crouch() {
+    public void crouch() {
         if (state == PlayerState.sprint)
         {
             state = PlayerState.slide;
@@ -66,11 +69,23 @@ public class Player : MonoBehaviour
     }
     //always called (client default sends 0,0,0)
     //called 2nd
-    void move(Vector3 dir) {
+    public void move(Vector3 dir) {
         rb.velocity = new Vector3(dir.x * speed * Time.deltaTime, rb.velocity.y, dir.z * speed * Time.deltaTime);
         if ((state == PlayerState.walk || state == PlayerState.sprint) && dir.magnitude == 0) {
             state = PlayerState.idle;
         }
+    }
+
+    public void setSpeed(float speed) {
+        if (!grounded) {
+            return;
+        }
+        this.speed = speed;
+    }
+
+    public void setRotation(float x, float y) {
+        camerapos.rotation = Quaternion.Euler(x, 0.0f, 0.0f);
+        transform.rotation = Quaternion.Euler(0.0f, y, 0.0f);
     }
     #endregion
 
@@ -81,6 +96,12 @@ public class Player : MonoBehaviour
             state = PlayerState.jump;
         }
 
+    }
+
+    private void Start()
+    {
+        Camera.main.transform.position = camerapos.position;
+        Camera.main.transform.parent = camerapos;
     }
 
 

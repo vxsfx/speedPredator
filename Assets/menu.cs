@@ -7,34 +7,16 @@ using Mirror;
 public class menu : MonoBehaviour
 {
     [SerializeField]
-    HostHandler host;
+    HostHandler hostHandle;
 
-    [SerializeField]
-    ServerHandler server;
+    string address = "localhost";
 
-    public void startHost() {
-
-        server.StartClient();
-        //get Address
-        string Address = "localhost";
-
-        ServerHandler.addHost(Address, 6);
-        server.StopClient();
-
-        host.StartHost();   
+    public void startClient() {
+        hostHandle.networkAddress = address;
+        hostHandle.StartClient();
     }
-
-    //discoveredServers;
-    public void findGame() {
-        foreach (ServerHandler.host h in ServerHandler.hostList)
-        {
-            host.networkAddress = h.Address;
-            host.StartClient();
-            if (HostHandler.PlayerCount < h.maxPlayers)
-            {
-                return;
-            }
-            host.StopClient();
-        }
+    public void host() {
+        hostHandle.networkAddress = address;
+        hostHandle.StartHost();
     }
 }   

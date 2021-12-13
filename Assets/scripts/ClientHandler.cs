@@ -5,52 +5,54 @@ using UnityEngine;
 public class ClientHandler : MonoBehaviour
 {
     //class to handle client input
-
-    Camera camera;
-    
-    
-    public ServerHandler server;
-
-    uint clientID;
+    private int clientID;
 
     void Start() {
-        camera = Camera.main;
-
+        //am working
+        clientID = HostHandler.PlayerCount;
     }
-
 
     //jump input
     void checkJump() {
         if (Input.GetButton("Jump")) {
-            //request jump
-            //server.networkAddress = "localhost";
-
-            //server.StartHost();
+            
         }
     }
 
     //movement
     void checkMovement() {
-        //get axis
-
-        //request move
+        Vector3 dir = new Vector3(Input.GetAxis("Vertical"), 0.0f, Input.GetAxis("Horizontal"));
+        HostHandler.moveRequest(clientID, dir);
     }
 
     void checkCrouch() {
-        if (Input.GetButton("")) { 
-        
+        if (Input.GetButton("Crouch")) {
+            HostHandler.crouchRequest(clientID);
         }
     }
 
     void checkSprint() {
-        if (Input.GetButton("")) {
-        
+        Debug.Log(clientID);
+        if (Input.GetButton("Sprint"))
+        {
+            HostHandler.setSpeed(clientID, 1.5f);
+        }
+        else {
+            HostHandler.setSpeed(clientID, 1.0f);
         }
     }
 
-    public void Update()
+    void checkCamera() {
+        HostHandler.setRotation(clientID, Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+    }
+
+    void Update()
     {
+        checkCamera();
         checkJump();
+        checkSprint();
+        checkMovement();
+        checkCrouch();
     }
 
 
