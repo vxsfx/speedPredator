@@ -5,7 +5,7 @@ using UnityEngine;
 public class ClientHandler : MonoBehaviour
 {
     //class to handle client input
-    private int clientID;
+    private int clientID = -1;
 
     void Start() {
         //am working
@@ -22,6 +22,7 @@ public class ClientHandler : MonoBehaviour
     //movement
     void checkMovement() {
         Vector3 dir = new Vector3(Input.GetAxis("Vertical"), 0.0f, Input.GetAxis("Horizontal"));
+        
         HostHandler.moveRequest(clientID, dir);
     }
 
@@ -48,11 +49,14 @@ public class ClientHandler : MonoBehaviour
 
     void Update()
     {
-        checkCamera();
-        checkJump();
-        checkSprint();
-        checkMovement();
-        checkCrouch();
+        if (HostHandler.players.Count == clientID)
+        {
+            checkCamera();
+            checkJump();
+            checkSprint();
+            checkMovement();
+            checkCrouch();
+        }
     }
 
 

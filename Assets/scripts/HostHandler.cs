@@ -5,7 +5,7 @@ using Mirror;
 public class HostHandler : NetworkManager
 {
     //need initialise???>
-    static List<Player> players;
+    public static List<Player> players = new List<Player>();
     int id;
 
     uint maxPLayers = 6;
@@ -13,7 +13,7 @@ public class HostHandler : NetworkManager
 
 
     //overloaded
-    public void OnServerAddPlayer(NetworkConnection conn)
+    public override void OnServerAddPlayer(NetworkConnection conn)
     {
         Transform startPos = GetStartPosition();
         GameObject player = startPos != null
@@ -25,6 +25,8 @@ public class HostHandler : NetworkManager
         player.name = $"{playerPrefab.name} [connId={conn.connectionId}]";
         players.Add(player.GetComponent<Player>());
         PlayerCount++;
+
+        Debug.Log("player added");
         Debug.Log(PlayerCount);
         NetworkServer.AddPlayerForConnection(conn, player);
     }
@@ -35,6 +37,10 @@ public class HostHandler : NetworkManager
     //[Command]
     static public void moveRequest(int id, Vector3 dir)
     {
+        
+        Debug.Log("move");
+        Debug.Log(id);
+
         players[id].move(dir);
     }
 
@@ -49,10 +55,12 @@ public class HostHandler : NetworkManager
     }
 
     static public void setSpeed(int id, float speed) {
+        Debug.Log("speed");
         players[id].setSpeed(speed);
     }
     static public void setRotation(int id, float x, float y) {
-        //players[id].setRotation(x, y);
+        Debug.Log("rot");
+        players[id].setRotation(x, y);
     }
     #endregion
 }
